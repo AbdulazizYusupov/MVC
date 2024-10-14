@@ -3,9 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\Janr;
+use App\Helpers\Auth;
 
 class JanrController
 {
+    public function __construct()
+    {
+        if (!Auth::check()){
+            header('location: /login');
+        }
+    }
     public function index()
     {
         $models = Janr::all();

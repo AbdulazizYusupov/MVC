@@ -1,9 +1,9 @@
 <?php 
-
+session_start();
 use App\App;
 
-include 'App/Helpers/helpers.php';
 include "autoload.php";
+include 'App/Helpers/helpers.php';
 include "web.php";
 
 $app = new App();

@@ -51,7 +51,7 @@ class Model extends Database
     }
     public static function updateKitob($id, $name, $text, $muallif_id, $janr_id)
     {
-        $sql = "UPDATE ". static::$table . " SET name = ?, text = ?, muallif_id = ?, janr_id = ? WHERE id = ?";
+        $sql = "UPDATE " . static::$table . " SET name = ?, text = ?, muallif_id = ?, janr_id = ? WHERE id = ?";
 
         $con = self::connect()->prepare($sql);
 
@@ -63,7 +63,7 @@ class Model extends Database
 
         if ($con->execute()) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -73,6 +73,31 @@ class Model extends Database
         $sql = "DELETE FROM " . static::$table . " WHERE id = {$id}";
         $stat = self::connect()->prepare($sql);
         if ($stat->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function attach($data)
+    {
+        $query = "SELECT * FROM " . static::$table . " WHERE email = '$data[0]' AND password = '$data[1]'";
+        $stmt = self::connect()->prepare($query);
+        
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            return false;
+        }
+    }
+
+    public static function registr($data)
+    {
+        $columns = implode(", ", array_keys($data));
+        $values = "'" . implode("','", array_values($data)) . "'";
+        $sql = "INSERT INTO " . static::$table . " ({$columns})  VALUES ({$values})";
+        $stmt = self::connect()->prepare($sql);
+        if ($stmt->execute()) {
             return true;
         } else {
             return false;

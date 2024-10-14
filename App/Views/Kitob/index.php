@@ -5,6 +5,9 @@ use App\Models\Janr;
 $avtors = Muallif::all();
 $janrs = Janr::all();
 
+if (auth()->role != 'admin'){
+    header('location: /login');
+}
 ?>
 <h1>Kitoblar sahifasi</h1>
 <form action="/createK" method="POST">
@@ -28,8 +31,8 @@ $janrs = Janr::all();
         <th>ID</th>
         <th>Name</th>
         <th>Text</th>
-        <th>muallif ismi</th>
-        <th>Janr name</th>
+        <th>Muallifi</th>
+        <th>Janri</th>
         <th>Show</th>
         <th>Edit</th>
         <th>Delete</th>

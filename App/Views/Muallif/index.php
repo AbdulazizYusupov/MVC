@@ -1,3 +1,8 @@
+<?php 
+if (auth()->role != 'user'){
+    header('location: /login');
+}
+?>
 <h1>Muallif sahifasi</h1>
 <form action="/createM" method="POST">
     <input type="text" name="name" placeholder="Name"><br><br>

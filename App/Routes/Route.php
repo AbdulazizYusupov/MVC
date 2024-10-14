@@ -28,11 +28,13 @@ class Route
         $method = $this->request->method();
 
         $action = self::$routes[$method][$path] ?? false;
+        // dd($action);    
         if ($action == false) {
             echo "404 not found: " . $path;
         }
 
         if (is_array($action)) {
+            // dd(new $action[0]);
             $controller = new $action[0]();
             $controller->{$action[1]}();
         }

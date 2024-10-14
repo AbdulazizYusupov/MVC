@@ -3,9 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\Muallif;
+use App\Helpers\Auth;
 
 class MuallifController
 {
+    public function __construct()
+    {
+        if (!Auth::check()){
+            header('location: /login');
+        }
+    }
     public function index()
     {
         $models = Muallif::all();
@@ -13,7 +20,7 @@ class MuallifController
     }
     public function createM()
     {
-        if (isset($_POST['ok'])) {
+        if (isset($_POST['ok']) && !empty($_POST['name'])) {
             $data = [
                 'name' => $_POST['name']
             ];
@@ -23,7 +30,7 @@ class MuallifController
     }
     public function deleteM()
     {
-        if (isset($_POST['ok'])) {
+        if (isset($_POST['ok']) && !empty($_POST['id'])) {
             $id = $_POST['id'];
             Muallif::delete($id);
             header('location: /');
@@ -31,7 +38,7 @@ class MuallifController
     }
     public function showM()
     {
-        if (isset($_POST['ok'])) {
+        if (isset($_POST['ok']) && !empty($_POST['id'])) {
             $id = $_POST['id'];
             $models = Muallif::show($id);
             // dd($models);
@@ -40,7 +47,7 @@ class MuallifController
     }
     public function editM()
     {
-        if (isset($_POST['ok'])) {
+        if (isset($_POST['ok']) && !empty($_POST['id'])) {
             $id = $_POST['id'];
             $models = Muallif::show($id);
             return view('Muallif/edit', 'Edit', $models);
@@ -48,7 +55,7 @@ class MuallifController
     }
     public function updateM()
     {
-        if (isset($_POST['ok'])) {
+        if (isset($_POST['ok']) && !empty($_POST['id']) && !empty($_POST['name'])) {
             $id = $_POST['id'];
             $name = $_POST['name'];
             // echo $id;
@@ -56,4 +63,5 @@ class MuallifController
         }
         header('location: /');
     }
+
 }
